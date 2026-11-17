@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DS-API · 气泡 淡蓝 / 淡紫</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #07080c; }
+  body {
+    width: 820px; margin: 0 auto; padding: 16px 16px 8px;
+    font-family: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", "Noto Sans SC", -apple-system, sans-serif;
+    color: #fff; zoom: 0.92;
+  }
+  .page-head { margin-bottom: 10px; }
+  .page-head h1 { font-size: 21px; font-weight: 700; letter-spacing: -.02em; }
+  .page-head h1 em {
+    font-style: normal; background: linear-gradient(90deg, #7cc8db, #a57bff);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .page-head p { color: #8a91a5; font-size: 11px; margin-top: 3px; }
+
+  .grid { display: flex; gap: 36px; justify-content: center; }
+  .col { width: 372px; }
+  .col h3 { font-size: 13px; color: #d6dae7; font-weight: 600; margin-bottom: 8px; }
+  .col h3 span { color: #7f88a8; font-weight: 400; font-size: 10.5px; margin-left: 6px; }
+
+  .canvas {
+    width: 372px; height: 150px; border-radius: 16px; padding: 11px;
+    background: linear-gradient(180deg, #f7f9ff 0%, #fff 32%, #fff 100%);
+    display: flex; flex-direction: column; gap: 7px; overflow: hidden;
+    color: #14171f; margin-bottom: 8px;
+  }
+  .label { display: flex; align-items: baseline; gap: 6px; color: #8a91a5; font-size: 10px; margin-bottom: 4px; }
+  .label b { color: #c9d0e0; font-size: 11px; }
+  .label code { font-family: Consolas, monospace; }
+
+  .row { display: flex; justify-content: flex-end; }
+  .bubble-user {
+    max-width: 55%; padding: 6px 10px; border-radius: 14px;
+    background: linear-gradient(125deg, #fff, #f0f3ff 54%, #f7f0ff);
+    border: 1px solid #e9edf7; font-size: 11.5px; color: #2e3340;
+  }
+  .assistant {
+    max-width: 90%; padding: 7px 12px; border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, .92);
+    box-shadow: 0 0 0 1px rgba(90, 130, 200, .06), 0 8px 20px -20px rgba(40, 90, 160, .3);
+    font-size: 11.5px; line-height: 1.5;
+  }
+  .assistant p { margin: 0 0 4px; }
+  .assistant p:last-child { margin-bottom: 0; }
+  .assistant pre {
+    margin: 0; background: #fff; border: 1px solid #e9ecf4; border-radius: 7px;
+    padding: 4px 8px; font-family: Consolas, monospace; font-size: 9.5px;
+    line-height: 1.5; color: #2a2f3d; white-space: pre;
+  }
+
+  .b1 { background: linear-gradient(135deg, #edf8fb, #f7fdfe); }
+  .b2 { background: linear-gradient(135deg, #e5f4f9, #f3fbfd); }
+  .b3 { background: linear-gradient(135deg, #dbeff7, #eef9fc); }
+  .p1 { background: linear-gradient(135deg, #f4f1ff, #fbf9ff); }
+  .p2 { background: linear-gradient(135deg, #efeaFF, #f9f6ff); }
+  .p3 { background: linear-gradient(135deg, #e9e1ff, #f5efff); }
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <h1>DS-API · 气泡 <em>淡蓝 / 淡紫</em></h1>
+  <p>左边是刚才的淡蓝，右边是同一浅度的淡紫。选一个方向。</p>
+</header>
+
+<div class="grid">
+
+  <section class="col">
+    <h3>淡蓝 <span>#7CC8DB 系</span></h3>
+
+    <div class="label"><b>01</b><code>#EDF8FB → #F7FDFE</code></div>
+    <div class="canvas">
+      <div class="row"><span class="bubble-user">你好</span></div>
+      <div class="assistant b1"><p>你好，有什么可以帮你的？</p></div>
+      <div class="assistant b1"><p>协程执行到挂起点时保存状态。</p><pre>suspend fun load(): User {}</pre></div>
+    </div>
+
+    <div class="label"><b>02</b><code>#E5F4F9 → #F3FBFD</code></div>
+    <div class="canvas">
+      <div class="row"><span class="bubble-user">你好</span></div>
+      <div class="assistant b2"><p>你好，有什么可以帮你的？</p></div>
+      <div class="assistant b2"><p>协程执行到挂起点时保存状态。</p><pre>suspend fun load(): User {}</pre></div>
+    </div>
+
+    <div class="label"><b>03</b><code>#DBEFF7 → #EEF9FC</code></div>
+    <div class="canvas">
+      <div class="row"><span class="bubble-user">你好</span></div>
+      <div class="assistant b3"><p>你好，有什么可以帮你的？</p></div>
+      <div class="assistant b3"><p>协程执行到挂起点时保存状态。</p><pre>suspend fun load(): User {}</pre></div>
+    </div>
+  </section>
+
+  <section class="col">
+    <h3>淡紫 <span>#A57BFF 系</span></h3>
+
+    <div class="label"><b>01</b><code>#F4F1FF → #FBF9FF</code></div>
+    <div class="canvas">
+      <div class="row"><span class="bubble-user">你好</span></div>
+      <div class="assistant p1"><p>你好，有什么可以帮你的？</p></div>
+      <div class="assistant p1"><p>协程执行到挂起点时保存状态。</p><pre>suspend fun load(): User {}</pre></div>
+    </div>
+
+    <div class="label"><b>02</b><code>#EFEAFF → #F9F6FF</code></div>
+    <div class="canvas">
+      <div class="row"><span class="bubble-user">你好</span></div>
+      <div class="assistant p2"><p>你好，有什么可以帮你的？</p></div>
+      <div class="assistant p2"><p>协程执行到挂起点时保存状态。</p><pre>suspend fun load(): User {}</pre></div>
+    </div>
+
+    <div class="label"><b>03</b><code>#E9E1FF → #F5EFFF</code></div>
+    <div class="canvas">
+      <div class="row"><span class="bubble-user">你好</span></div>
+      <div class="assistant p3"><p>你好，有什么可以帮你的？</p></div>
+      <div class="assistant p3"><p>协程执行到挂起点时保存状态。</p><pre>suspend fun load(): User {}</pre></div>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

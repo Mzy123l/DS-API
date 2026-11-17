@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DS-API · 助手气泡 C 优化版</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #07080c; }
+  body {
+    width: 700px; margin: 0 auto; padding: 22px 16px 14px;
+    font-family: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", "Noto Sans SC", -apple-system, sans-serif;
+    color: #fff;
+  }
+  .page-head { margin-bottom: 16px; }
+  .page-head h1 { font-size: 24px; font-weight: 700; letter-spacing: -.02em; }
+  .page-head h1 em {
+    font-style: normal; background: linear-gradient(120deg, #8f9dff, #5d78ff);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .page-head p { color: #8a91a5; font-size: 12.5px; margin-top: 6px; line-height: 1.8; }
+
+  .row { display: flex; gap: 28px; align-items: flex-start; }
+  .canvas {
+    width: 390px; height: 560px; flex: none; border-radius: 26px; padding: 16px;
+    background: linear-gradient(180deg, #f7f9ff 0%, #fff 32%, #fff 100%);
+    border: 1px solid rgba(255, 255, 255, .08);
+    overflow: hidden; display: flex; flex-direction: column; gap: 14px;
+    color: #14171f;
+  }
+  .msg-user { display: flex; justify-content: flex-end; }
+  .bubble-user {
+    max-width: 80%; padding: 11px 15px; border-radius: 20px;
+    background: linear-gradient(125deg, #fff, #f0f3ff 54%, #f7f0ff);
+    border: 1px solid #e9edf7; font-size: 15px; line-height: 1.5; color: #2e3340;
+    box-shadow: 0 8px 20px -18px rgba(41, 68, 210, .55);
+  }
+
+  /* C 优化版气泡 */
+  .assistant {
+    max-width: 92%; padding: 12px 16px; border-radius: 20px;
+    background: linear-gradient(135deg, #f2f5ff 0%, #f8f4ff 55%, #fdfbff 100%);
+    border: 1px solid rgba(255, 255, 255, .88);
+    box-shadow: 0 0 0 1px rgba(77, 107, 254, .055),
+                0 10px 26px -22px rgba(41, 68, 210, .5),
+                inset 0 1px 0 rgba(255, 255, 255, .92);
+    font-size: 15.5px; line-height: 1.6; color: #14171f;
+  }
+  .assistant.short { max-width: 80%; }
+  .assistant h3 { font-size: 15.5px; font-weight: 600; margin: 0 0 6px; color: #10131a; }
+  .assistant p { margin: 0 0 9px; }
+  .assistant p:last-child { margin-bottom: 0; }
+  .assistant ul { margin: 0 0 9px; padding-left: 18px; }
+  .assistant li { margin-bottom: 3px; }
+  .assistant code {
+    background: rgba(255, 255, 255, .72); border: 1px solid rgba(77, 107, 254, .10);
+    border-radius: 5px; padding: 1px 5px; font-family: Consolas, monospace;
+    font-size: 14px; color: #3a4054;
+  }
+  .assistant pre {
+    margin: 0; background: #fff; border: 1px solid #e9ecf4; border-radius: 10px;
+    padding: 10px 12px; font-family: Consolas, monospace; font-size: 12.5px;
+    line-height: 1.6; color: #2a2f3d; overflow: hidden; white-space: pre;
+  }
+  .assistant .bar {
+    display: flex; justify-content: space-between; font-size: 10.5px;
+    color: #9aa1b2; margin-bottom: 5px;
+  }
+
+  .specs { flex: 1; color: #8a91a5; font-size: 12px; line-height: 2; }
+  .specs b { color: #c9d0ff; font-weight: 600; display: block; margin-top: 14px; }
+  .specs b:first-child { margin-top: 0; }
+  .specs code { color: #aeb8ff; font-family: Consolas, monospace; }
+  .swatches { display: flex; gap: 6px; margin-top: 8px; }
+  .sw { width: 34px; height: 34px; border-radius: 9px; border: 1px solid rgba(255,255,255,.18); }
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <h1>DS-API · 助手气泡 <em>C 优化版</em></h1>
+  <p>在 C（浅蓝渐变）基础上收紧了渐变边界、加了白色内高光和极淡品牌外描边，长回答代码块改成白卡。</p>
+</header>
+
+<div class="row">
+  <div class="canvas">
+    <div class="msg-user"><div class="bubble-user">你好</div></div>
+    <div class="assistant short">你好，有什么可以帮你的？</div>
+    <div class="msg-user"><div class="bubble-user">展开讲讲协程的挂起点。</div></div>
+    <div class="assistant">
+      <h3>挂起点</h3>
+      <p>协程执行到 <code>suspend</code> 时保存状态并让出线程，结果回来再从原处恢复。</p>
+      <ul>
+        <li>挂起不阻塞线程</li>
+        <li>恢复时回到原处</li>
+      </ul>
+      <pre><div class="bar"><span>kotlin</span><span>复制</span></div>suspend fun load(): User {
+    return api.fetchUser()
+}</pre>
+    </div>
+    <div class="msg-user"><div class="bubble-user">谢谢</div></div>
+    <div class="assistant short">不客气，随时问我。</div>
+  </div>
+
+  <div class="specs">
+    <b>渐变</b>
+    <code>135deg: #F2F5FF → #F8F4FF → #FDFBFF</code>
+    保留淡蓝紫色相，明度提高一档：能看出气泡，但不压正文。
+    <div class="swatches">
+      <span class="sw" style="background:#f2f5ff"></span>
+      <span class="sw" style="background:#f8f4ff"></span>
+      <span class="sw" style="background:#fdfbff"></span>
+    </div>
+
+    <b>边缘</b>
+    <code>1px 白 88% + 外描边 5.5% 品牌蓝</code>
+    白色内描边负责"高光"，外描边把气泡从白底上勾出来，不发灰。
+
+    <b>高光与投影</b>
+    <code>inset 0 1px 0 白 92%</code><br />
+    <code>0 10px 26px -22px 品牌蓝 50%</code>
+    顶部一条内高光，底部一层很淡的品牌色投影，有"浮着"的感觉。
+
+    <b>内部元素</b>
+    代码块：白卡 <code>#FFFFFF + #E9ECF4</code>，与渐变底区分<br />
+    行内代码：白 72% + 品牌蓝 10% 描边<br />
+    短回答最大宽 80%，长回答 92%
+
+    <b>圆角与间距</b>
+    20px 圆角；内边距 12 × 16；与用户气泡同句法
+  </div>
+</div>
+
+</body>
+</html>
+
+

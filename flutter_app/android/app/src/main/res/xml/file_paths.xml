@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  朗读音频（TTS 生成的 wav）交给系统播放器打开时暴露的路径。
+  只暴露应用自己的音频目录，不要扩大到整个外部存储。
+-->
+<paths>
+    <external-files-path name="audio" path="audio/" />
+    <files-path name="audio_internal" path="audio/" />
+    <cache-path name="cache" path="." />
+</paths>

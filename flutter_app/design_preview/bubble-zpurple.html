@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DS-API · 紫端 4 档</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #07080c; }
+  body {
+    width: 440px; margin: 0 auto; padding: 16px 16px 10px;
+    font-family: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", "Noto Sans SC", -apple-system, sans-serif;
+    color: #fff; zoom: 0.9;
+  }
+  .page-head { margin-bottom: 10px; }
+  .page-head h1 { font-size: 21px; font-weight: 700; letter-spacing: -.02em; }
+  .page-head h1 em {
+    font-style: normal; background: linear-gradient(120deg, #b9ccff, #d8b9ff);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .page-head p { color: #8a91a5; font-size: 11px; margin-top: 3px; }
+
+  .label { display: flex; align-items: baseline; gap: 8px; margin: 0 auto 4px; width: 400px; color: #8a91a5; font-size: 10px; }
+  .label b { color: #d6dae7; font-size: 11.5px; }
+  .label code { font-family: Consolas, monospace; }
+
+  .canvas {
+    width: 400px; margin: 0 auto 12px; border-radius: 18px; padding: 13px;
+    background: linear-gradient(180deg, #f7f9ff 0%, #fff 32%, #fff 100%);
+    display: flex; flex-direction: column; gap: 8px; overflow: hidden;
+    color: #14171f;
+  }
+  .row { display: flex; justify-content: flex-end; }
+  .bubble-user {
+    max-width: 55%; padding: 6px 11px; border-radius: 15px;
+    background: linear-gradient(125deg, #ffffff 0%, #f0f3ff 54%, #f7f0ff 100%);
+    border: 1px solid #e9edf7; font-size: 12px; color: #2e3340;
+  }
+  .assistant {
+    max-width: 90%; padding: 8px 13px; border-radius: 16px;
+    border: 1px solid #f0eef9;
+    box-shadow: 0 8px 20px -18px rgba(80, 60, 180, .3);
+    font-size: 12px; line-height: 1.5; color: #10131a;
+  }
+  .assistant p { margin: 0 0 4px; }
+  .assistant p:last-child { margin-bottom: 0; }
+  .assistant pre {
+    margin: 0; background: rgba(255, 255, 255, .72); border: 1px solid rgba(230, 235, 245, .9);
+    border-radius: 7px; padding: 4px 8px; font-family: Consolas, monospace;
+    font-size: 9.5px; line-height: 1.5; color: #2a2f3d; white-space: pre;
+  }
+
+  .z1 { background: linear-gradient(125deg, #ffffff 0%, #f7f8ff 50%, #fbf6ff 100%); }
+  .z2 { background: linear-gradient(125deg, #ffffff 0%, #f7f8ff 50%, #fdf9ff 100%); }
+  .z3 { background: linear-gradient(125deg, #ffffff 0%, #f7f8ff 50%, #fefbff 100%); }
+  .z4 { background: linear-gradient(125deg, #ffffff 0%, #f7f8ff 50%, #ffffff 100%); }
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <h1>DS-API · 气泡 <em>紫端 4 档</em></h1>
+  <p>只改右侧紫色，左端和中段不动。从有紫到完全白。</p>
+</header>
+
+<div class="label"><b>01</b>紫端 #FBF6FF</div>
+<div class="canvas">
+  <div class="row"><span class="bubble-user">你好</span></div>
+  <div class="assistant z1"><p>你好，有什么可以帮你的？</p></div>
+  <div class="assistant z1"><p>协程执行到挂起点时保存状态并让出线程。</p><pre>suspend fun load(): User {}</pre></div>
+</div>
+
+<div class="label"><b>02</b>紫端 #FDF9FF</div>
+<div class="canvas">
+  <div class="row"><span class="bubble-user">你好</span></div>
+  <div class="assistant z2"><p>你好，有什么可以帮你的？</p></div>
+  <div class="assistant z2"><p>协程执行到挂起点时保存状态并让出线程。</p><pre>suspend fun load(): User {}</pre></div>
+</div>
+
+<div class="label"><b>03</b>紫端 #FEFBFF</div>
+<div class="canvas">
+  <div class="row"><span class="bubble-user">你好</span></div>
+  <div class="assistant z3"><p>你好，有什么可以帮你的？</p></div>
+  <div class="assistant z3"><p>协程执行到挂起点时保存状态并让出线程。</p><pre>suspend fun load(): User {}</pre></div>
+</div>
+
+<div class="label"><b>04</b>紫端 #FFFFFF（无紫）</div>
+<div class="canvas">
+  <div class="row"><span class="bubble-user">你好</span></div>
+  <div class="assistant z4"><p>你好，有什么可以帮你的？</p></div>
+  <div class="assistant z4"><p>协程执行到挂起点时保存状态并让出线程。</p><pre>suspend fun load(): User {}</pre></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DS-API · UI 升级方案 · 空态与对话</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- 图标 sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 9.2h15.5M4 15.6h9"/></symbol>
+  <symbol id="i-newchat" viewBox="0 0 24 24"><path d="M21 14.5a2.5 2.5 0 0 1-2.5 2.5H8l-4.5 3.5V5.5A2.5 2.5 0 0 1 6 3h12.5A2.5 2.5 0 0 1 21 5.5Z"/><path d="M12 6.5v6M9 9.5h6"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M3 6.5h10M3 12h7M3 17.5h10"/><path d="M16.6 18.2l4.6-4.6a1.9 1.9 0 0 0-2.7-2.7l-4.6 4.6-.6 3.3 3.3-.6Z"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3.6l1.8 5.1 5.1 1.8-5.1 1.8L12 17.4l-1.8-5.1-5.1-1.8 5.1-1.8L12 3.6Z"/><path d="M18.5 16l.7 1.9 1.9.7-1.9.7-.7 1.9-.7-1.9-1.9-.7 1.9-.7.7-1.9Z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2"/><path d="M12 3.4a13 13 0 0 1 0 17.2 13 13 0 0 1 0-17.2Z"/></symbol>
+  <symbol id="i-tune" viewBox="0 0 24 24"><path d="M4 7.5h8.5M19.5 7.5H21M4 16.5h3.5M14.5 16.5H20"/><circle cx="16" cy="7.5" r="2.2"/><circle cx="11" cy="16.5" r="2.2"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2.6" width="6" height="11.2" rx="3"/><path d="M5.8 11.2v1.2a6.2 6.2 0 0 0 12.4 0v-1.2M12 18.6v3M9 21.6h6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M12 19V5.4M6.2 11.2 12 5.4l5.8 5.8"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11.5" height="11.5" rx="2.4"/><path d="M5 15V5.2A1.8 1.8 0 0 1 6.8 3.4h9.8"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20.4 12a8.4 8.4 0 1 1-2.5-6"/><path d="M20.6 3.6v5.8h-5.8"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2.4"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9.5 6l6 6-6 6"/></symbol>
+  <symbol id="i-chev-down" viewBox="0 0 24 24"><path d="M6 9.5l6 6 6-6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.8"/><path d="M16.2 16.2 21 21"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M4.5 12h14M13 6.5l5.5 5.5L13 17.5"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13.2 2.4 5 13.4h5.6L10.4 21.6 19 10.6h-5.6l-.2-8.2Z"/></symbol>
+  <symbol id="i-diamond" viewBox="0 0 24 24"><path d="M6.4 3.2h11.2l3.2 5.6L12 20.8 3.2 8.8l3.2-5.6Z"/><path d="M3.4 8.8h17.2M9.2 3.4 12 20.4l2.8-17"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.4 4.3L19 6.8"/></symbol>
+  <symbol id="i-bars" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx="1" fill="currentColor"/><rect x="4.6" y="5" width="3" height="6" rx="1" fill="currentColor"/><rect x="9.2" y="2.6" width="3" height="8.4" rx="1" fill="currentColor"/><rect x="13.8" y="0.4" width="3" height="10.6" rx="1" fill="currentColor"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 16 11"><path fill="currentColor" d="M8 2.1c2.2 0 4.2.85 5.7 2.25l1.2-1.2A10.1 10.1 0 0 0 8 .35 10.1 10.1 0 0 0 1.1 3.15l1.2 1.2A8 8 0 0 1 8 2.1Zm0 3.8c1.2 0 2.3.42 3.1 1.2l1.2-1.2A6.4 6.4 0 0 0 8 3.95a6.4 6.4 0 0 0-4.3 1.95l1.2 1.2c.8-.78 1.9-1.2 3.1-1.2Zm0 3.3c.8 0 1.5.28 2 .78L8 10.9 5.9 9.58c.5-.5 1.2-.78 2.1-.78Z"/></symbol>
+  <symbol id="i-battery" viewBox="0 0 25 11"><rect x="0.6" y="0.6" width="20" height="9.8" rx="3" fill="none" stroke="currentColor" stroke-opacity=".38"/><rect x="2.2" y="2.2" width="15.2" height="6.6" rx="1.6" fill="currentColor"/><path d="M22.6 3.5v4c1-.3 1.4-1 1.4-2s-.4-1.7-1.4-2Z" fill="currentColor" fill-opacity=".45"/></symbol>
+</svg>
+
+<header class="page-head">
+  <div>
+    <h1>DS-API · UI 升级方案 <em>空态 / 对话</em></h1>
+    <p>三个方向，均保留 DeepSeek 品牌蓝与「快速 / 专家」双模式。差别在层次、光影、排版密度与圆角语言。</p>
+  </div>
+  <div class="meta">低保真设计稿 · 390 × 844<br />静态预览，用于确认视觉方向</div>
+</header>
+
+<main class="grid">
+
+  <!-- ==================== 方案 A ==================== -->
+  <section class="col">
+    <div class="col-head">
+      <span class="badge">方案 A</span>
+      <h2>轻盈玻璃 <span>Airy Glass</span></h2>
+      <p>品牌蓝以极淡光晕铺在顶部，白色卡片 + 柔和投影制造悬浮感。圆角更饱满，控件更"软"，最接近官方但更有层次。</p>
+    </div>
+
+    <!-- A · 空态 -->
+    <div class="phone">
+      <div class="screen theme-a">
+        <div class="screen-bg"></div>
+        <div class="stack">
+          <div class="statusbar">
+            <span class="time">9:41</span>
+            <span class="sb-icons">
+              <svg width="17" height="11"><use href="#i-bars"/></svg>
+              <svg width="16" height="11"><use href="#i-wifi"/></svg>
+              <svg width="25" height="11"><use href="#i-battery"/></svg>
+            </span>
+          </div>
+          <div class="navbar">
+            <div class="icon-btn menu"><svg class="ic"><use href="#i-menu"/></svg></div>
+            <div class="title-wrap"></div>
+            <div class="icon-btn"><svg class="ic"><use href="#i-edit"/></svg></div>
+            <div class="icon-btn"><svg class="ic"><use href="#i-newchat"/></svg></div>
+          </div>
+          <div class="home">
+            <div class="logo-wrap">
+              <span class="logo-glow"></span>
+              <div class="logo"><img src="../assets/icon_app.png" alt="DeepSeek" /></div>
+            </div>
+            <h1>你好，DeepSeek</h1>
+            <div class="lead">今天想聊点什么？</div>
+            <div class="mode" style="margin-top:30px">
+              <div class="seg on"><svg class="ic"><use href="#i-bolt"/></svg>快速模式</div>
+              <div class="seg"><svg class="ic"><use href="#i-diamond"/></svg>专家模式</div>
+            </div>
+            <div class="mode-sub">适合日常对话，即时响应</div>
+            <div class="suggest">
+              <div class="s"><svg class="ic"><use href="#i-spark"/></svg>帮我润色一段文案</div>
+              <div class="s"><svg class="ic"><use href="#i-spark"/></svg>解释这段代码</div>
+              <div class="s"><svg class="ic"><use href="#i-spark"/></svg>规划一个周末</div>
+            </div>
+          </div>
+          <div class="composer-wrap">
+            <div class="composer">
+              <div class="ph">发消息或按住说话</div>
+              <div class="tools">
+                <span class="pill on"><svg class="ic"><use href="#i-spark"/></svg>深度思考</span>
+                <span class="pill"><svg class="ic"><use href="#i-globe"/></svg>智能搜索</span>
+                <span class="pill"><svg class="ic"><use href="#i-tune"/></svg>high</span>
+                <span class="grow"></span>
+                <span class="round-btn ghost"><svg class="ic"><use href="#i-plus"/></svg></span>
+                <span class="round-btn mic"><svg class="ic"><use href="#i-mic"/></svg></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="island"></div>
+        <div class="home-ind"></div>
+      </div>
+    </div>
+
+    <!-- A · 对话 -->
+    <div class="phone">
+      <div class="screen theme-a">
+        <div class="screen-bg"></div>
+        <div class="stack">
+          <div class="statusbar">
+            <span class="time">9:41</span>
+            <span class="sb-icons">
+              <svg width="17" height="11"><use href="#i-bars"/></svg>
+              <svg width="16" height="11"><use href="#i-wifi"/></svg>
+              <svg width="25" height="11"><use href="#i-battery"/></svg>
+            </span>
+          </div>
+          <div class="navbar">
+            <div class="icon-btn menu"><svg class="ic"><use href="#i-menu"/></svg></div>
+            <div class="title-wrap">
+              <div class="title">产品介绍优化</div>
+              <div class="sub"><svg class="ic"><use href="#i-bolt"/></svg>快速模式</div>
+            </div>
+            <div class="icon-btn"><svg class="ic"><use href="#i-edit"/></svg></div>
+            <div class="icon-btn"><svg class="ic"><use href="#i-newchat"/></svg></div>
+          </div>
+          <div class="chat">
+            <div class="msg-user">
+              <div class="bubble">帮我把这段产品介绍写得更打动人一些。</div>
+            </div>
+            <div class="msg-asst">
+              <div class="avatar"><img src="../assets/icon_app.png" alt="" /></div>
+              <div class="asst-body">
+                <div class="asst-name">DeepSeek</div>
+                <div class="think">
+                  <svg class="ic"><use href="#i-spark"/></svg>已深度思考（用时 8 秒）
+                  <svg class="ic chev"><use href="#i-chev"/></svg>
+                </div>
+                <div class="answer">
+                  <p>当然可以。原文信息很完整，但偏重功能罗列。下面这版把重心放回「用户能感受到的变化」：</p>
+                  <ul>
+                    <li>开头先给结论，让读者 3 秒知道它解决什么问题</li>
+                    <li>用「少做一步」代替「自动化」，把功能翻译成体感</li>
+                    <li>结尾收在一个具体动作上：<strong>今天就试试</strong></li>
+                  </ul>
+                </div>
+                <div class="actions">
+                  <svg class="ic"><use href="#i-copy"/></svg>
+                  <svg class="ic"><use href="#i-list"/></svg>
+                  <span class="spacer"></span>
+                  <svg class="ic"><use href="#i-refresh"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="msg-user">
+              <div class="bubble">语气再轻松一点，像在跟朋友聊天。</div>
+            </div>
+            <div class="typing"><i></i><i></i><i></i></div>
+          </div>
+          <div class="composer-wrap">
+            <div class="composer">
+              <div class="ph">继续追问<span class="caret"></span></div>
+              <div class="tools">
+                <span class="pill"><svg class="ic"><use href="#i-spark"/></svg>深度思考</span>
+                <span class="pill on"><svg class="ic"><use href="#i-globe"/></svg>智能搜索</span>
+                <span class="grow"></span>
+                <span class="round-btn ghost"><svg class="ic"><use href="#i-plus"/></svg></span>
+                <span class="round-btn solid"><svg class="ic"><use href="#i-send"/></svg></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="island"></div>
+        <div class="home-ind"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 方案 B ==================== -->
+  <section class="col">
+    <div class="col-head">
+      <span class="badge">方案 B</span>
+      <h2>编辑感极简 <span>Editorial</span></h2>
+      <p>去掉彩色底与重阴影，靠字号、字重、留白和细分隔线建立高级感。左上对齐、建议列表化，像一本干净的说明书。</p>
+    </div>
+
+    <!-- B · 空态 -->
+    <div class="phone">
+      <div class="screen theme-b">
+        <div class="stack">
+          <div class="statusbar">
+            <span class="time">9:41</span>
+            <span class="sb-icons">
+              <svg width="17" height="11"><use href="#i-bars"/></svg>
+              <svg width="16" height="11"><use href="#i-wifi"/></svg>
+              <svg width="25" height="11"><use href="#i-battery"/></svg>
+            </span>
+          </div>
+          <div class="navbar">
+            <div class="icon-btn menu"><svg class="ic"><use href="#i-menu"/></svg></div>
+            <div class="title-wrap"></div>
+            <div class="icon-btn"><svg class="ic"><use href="#i-edit"/></svg></div>
+            <div class="icon-btn"><svg class="ic"><use href="#i-newchat"/></svg></div>
+          </div>
+          <div class="home">
+            <div class="logo-wrap">
+              <div class="logo"><img src="../assets/icon_app.png" alt="DeepSeek" /></div>
+            </div>
+            <h1>今天想聊点什么？<br /><span>或者，先从一个想法开始。</span></h1>
+            <div class="lead">你的 AI 助手，随时可以开始。问得越具体，答得越有用。</div>
+            <div class="mode">
+              <div class="seg on"><svg class="ic"><use href="#i-bolt"/></svg>快速模式</div>
+              <div class="seg"><svg class="ic"><use href="#i-diamond"/></svg>专家模式</div>
+            </div>
+            <div class="b-list">
+              <div class="row"><span class="no">01</span><span class="txt">帮我写一段产品介绍</span><svg class="ic"><use href="#i-arrow-r"/></svg></div>
+              <div class="row"><span class="no">02</span><span class="txt">解释这段代码的作用</span><svg class="ic"><use href="#i-arrow-r"/></svg></div>
+              <div class="row"><span class="no">03</span><span class="txt">规划一个周末的行程</span><svg class="ic"><use href="#i-arrow-r"/></svg></div>
+            </div>
+          </div>
+          <div class="composer-wrap">
+            <div class="composer">
+              <div class="ph">发消息或按住说话</div>
+              <div class="tools">
+                <span class="pill on"><svg class="ic"><use href="#i-spark"/></svg>深度思考</span>
+                <span class="pill"><svg class="ic"><use href="#i-globe"/></svg>智能搜索</span>
+                <span class="grow"></span>
+                <span class="round-btn ghost"><svg class="ic"><use href="#i-plus"/></svg></span>
+                <span class="round-btn mic"><svg class="ic"><use href="#i-mic"/></svg></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="island"></div>
+        <div class="home-ind"></div>
+      </div>
+    </div>
+
+    <!-- B · 对话 -->
+    <div class="phone">
+      <div class="screen theme-b">
+        <div class="stack">
+          <div class="statusbar">
+            <span class="time">9:41</span>
+            <span class="sb-icons">
+              <svg width="17" height="11"><use href="#i-bars"/></svg>
+              <svg width="16" height="11"><use href="#i-wifi"/></svg>
+              <svg width="25" height="11"><use href="#i-battery"/></svg>
+            </span>
+          </div>
+          <div class="navbar">
+            <div class="icon-btn menu"><svg class="ic"><use href="#i-menu"/></svg></div>
+            <div class="title-wrap">
+              <div class="title">产品介绍优化</div>
+              <div class="sub">快速模式</div>
+            </div>
+            <div class="icon-btn"><svg class="ic"><use href="#i-edit"/></svg></div>
+            <div class="icon-btn"><svg class="ic"><use href="#i-newchat"/></svg></div>
+          </div>
+          <div class="chat">
+            <div class="msg-user">
+              <div class="bubble">帮我把这段产品介绍写得更打动人一些。</div>
+            </div>
+            <div class="msg-asst">
+              <div class="asst-body">
+                <div class="asst-name">DEEPSEEK · 快速模式</div>
+                <div class="think">
+                  <svg class="ic"><use href="#i-spark"/></svg>思考了 8 秒
+                  <svg class="ic chev"><use href="#i-chev"/></svg>
+                </div>
+                <div class="answer">
+                  <p>当然可以。原文信息很完整，但偏重功能罗列。下面这版把重心放回「用户能感受到的变化」：</p>
+                  <ul>
+                    <li>开头先给结论，让读者 3 秒知道它解决什么问题</li>
+                    <li>用「少做一步」代替「自动化」，把功能翻译成体感</li>
+                    <li>结尾收在一个具体动作上：<strong>今天就试试</strong></li>
+                  </ul>
+                </div>
+                <div class="actions">
+                  <svg class="ic"><use href="#i-copy"/></svg>
+                  <svg class="ic"><use href="#i-list"/></svg>
+                  <span class="spacer"></span>
+                  <svg class="ic"><use href="#i-refresh"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="msg-user">
+              <div class="bubble">语气再轻松一点，像在跟朋友聊天。</div>
+            </div>
+            <div class="typing"><i></i><i></i><i></i></div>
+          </div>
+          <div class="composer-wrap">
+            <div class="composer">
+              <div class="ph">继续追问<span class="caret"></span></div>
+              <div class="tools">
+                <span class="pill"><svg class="ic"><use href="#i-spark"/></svg>深度思考</span>
+                <span class="pill on"><svg class="ic"><use href="#i-globe"/></svg>智能搜索</span>
+                <span class="grow"></span>
+                <span class="round-btn ghost"><svg class="ic"><use href="#i-plus"/></svg></span>
+                <span class="round-btn solid"><svg class="ic"><use href="#i-send"/></svg></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="island"></div>
+        <div class="home-ind"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 方案 C ==================== -->
+  <section class="col">
+    <div class="col-head">
+      <span class="badge">方案 C</span>
+      <h2>深潮渐变 <span>Deep Ocean</span></h2>
+      <p>用品牌蓝到紫的渐变建立"科技感"：发光 Logo、渐变描边输入框、深蓝用户气泡。对比最强，也最容易和别的 AI App 拉开差距。</p>
+    </div>
+
+    <!-- C · 空态 -->
+    <div class="phone">
+      <div class="screen theme-c">
+        <div class="screen-bg"></div>
+        <div class="stack">
+          <div class="statusbar">
+            <span class="time">9:41</span>
+            <span class="sb-icons">
+              <svg width="17" height="11"><use href="#i-bars"/></svg>
+              <svg width="16" height="11"><use href="#i-wifi"/></svg>
+              <svg width="25" height="11"><use href="#i-battery"/></svg>
+            </span>
+          </div>
+          <div class="navbar">
+            <div class="icon-btn menu"><svg class="ic"><use href="#i-menu"/></svg></div>
+            <div class="title-wrap"></div>
+            <div class="icon-btn"><svg class="ic"><use href="#i-edit"/></svg></div>
+            <div class="icon-btn"><svg class="ic"><use href="#i-newchat"/></svg></div>
+          </div>
+          <div class="home">
+            <div class="logo-wrap">
+              <span class="logo-glow"></span>
+              <div class="logo"><img src="../assets/icon_app.png" alt="DeepSeek" /></div>
+            </div>
+            <h1>你好，<span class="grad">DeepSeek</span></h1>
+            <div class="lead">让每个问题，都得到一个好答案</div>
+            <div class="mode">
+              <div class="seg on"><svg class="ic"><use href="#i-bolt"/></svg>快速模式</div>
+              <div class="seg"><svg class="ic"><use href="#i-diamond"/></svg>专家模式</div>
+            </div>
+            <div class="mode-sub">适合日常对话，即时响应</div>
+            <div class="suggest">
+              <div class="s"><svg class="ic"><use href="#i-spark"/></svg>帮我润色一段文案</div>
+              <div class="s"><svg class="ic"><use href="#i-spark"/></svg>解释这段代码</div>
+              <div class="s"><svg class="ic"><use href="#i-spark"/></svg>规划一个周末</div>
+            </div>
+          </div>
+          <div class="composer-wrap">
+            <div class="composer">
+              <div class="inner">
+                <div class="ph">发消息或按住说话</div>
+                <div class="tools">
+                  <span class="pill on"><svg class="ic"><use href="#i-spark"/></svg>深度思考</span>
+                  <span class="pill"><svg class="ic"><use href="#i-globe"/></svg>智能搜索</span>
+                  <span class="pill"><svg class="ic"><use href="#i-tune"/></svg>high</span>
+                  <span class="grow"></span>
+                  <span class="round-btn ghost"><svg class="ic"><use href="#i-plus"/></svg></span>
+                  <span class="round-btn mic"><svg class="ic"><use href="#i-mic"/></svg></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="island"></div>
+        <div class="home-ind"></div>
+      </div>
+    </div>
+
+    <!-- C · 对话 -->
+    <div class="phone">
+      <div class="screen theme-c">
+        <div class="screen-bg"></div>
+        <div class="stack">
+          <div class="statusbar">
+            <span class="time">9:41</span>
+            <span class="sb-icons">
+              <svg width="17" height="11"><use href="#i-bars"/></svg>
+              <svg width="16" height="11"><use href="#i-wifi"/></svg>
+              <svg width="25" height="11"><use href="#i-battery"/></svg>
+            </span>
+          </div>
+          <div class="navbar">
+            <div class="icon-btn menu"><svg class="ic"><use href="#i-menu"/></svg></div>
+            <div class="title-wrap">
+              <div class="title">产品介绍优化</div>
+              <div class="sub"><svg class="ic"><use href="#i-bolt"/></svg>快速模式</div>
+            </div>
+            <div class="icon-btn"><svg class="ic"><use href="#i-edit"/></svg></div>
+            <div class="icon-btn"><svg class="ic"><use href="#i-newchat"/></svg></div>
+          </div>
+          <div class="chat">
+            <div class="msg-user">
+              <div class="bubble">帮我把这段产品介绍写得更打动人一些。</div>
+            </div>
+            <div class="msg-asst">
+              <div class="avatar"><img src="../assets/icon_app.png" alt="" /></div>
+              <div class="asst-body">
+                <div class="asst-name"><span class="dot"></span>DeepSeek</div>
+                <div class="think">
+                  <svg class="ic"><use href="#i-spark"/></svg>已深度思考（用时 8 秒）
+                  <svg class="ic chev"><use href="#i-chev"/></svg>
+                </div>
+                <div class="answer">
+                  <p>当然可以。原文信息很完整，但偏重功能罗列。下面这版把重心放回「用户能感受到的变化」：</p>
+                  <ul>
+                    <li>开头先给结论，让读者 3 秒知道它解决什么问题</li>
+                    <li>用「少做一步」代替「自动化」，把功能翻译成体感</li>
+                    <li>结尾收在一个具体动作上：<strong>今天就试试</strong></li>
+                  </ul>
+                </div>
+                <div class="actions">
+                  <svg class="ic"><use href="#i-copy"/></svg>
+                  <svg class="ic"><use href="#i-list"/></svg>
+                  <span class="spacer"></span>
+                  <svg class="ic"><use href="#i-refresh"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="msg-user">
+              <div class="bubble">语气再轻松一点，像在跟朋友聊天。</div>
+            </div>
+            <div class="typing"><i></i><i></i><i></i></div>
+          </div>
+          <div class="composer-wrap">
+            <div class="composer">
+              <div class="inner">
+                <div class="ph">继续追问<span class="caret"></span></div>
+                <div class="tools">
+                  <span class="pill"><svg class="ic"><use href="#i-spark"/></svg>深度思考</span>
+                  <span class="pill on"><svg class="ic"><use href="#i-globe"/></svg>智能搜索</span>
+                  <span class="grow"></span>
+                  <span class="round-btn ghost"><svg class="ic"><use href="#i-plus"/></svg></span>
+                  <span class="round-btn solid"><svg class="ic"><use href="#i-send"/></svg></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="island"></div>
+        <div class="home-ind"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="footer-note">注：以上为视觉方向稿，最终在 Flutter 中按 1:1 实现；图标、间距、动效会随实现微调。</div>
+
+</body>
+</html>

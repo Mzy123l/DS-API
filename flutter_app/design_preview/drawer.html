@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DS-API · UI 升级方案 · 历史抽屉</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 9.2h15.5M4 15.6h9"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M3 6.5h10M3 12h7M3 17.5h10"/><path d="M16.6 18.2l4.6-4.6a1.9 1.9 0 0 0-2.7-2.7l-4.6 4.6-.6 3.3 3.3-.6Z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.8"/><path d="M16.2 16.2 21 21"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9.5 6l6 6-6 6"/></symbol>
+  <symbol id="i-bars" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx="1" fill="currentColor"/><rect x="4.6" y="5" width="3" height="6" rx="1" fill="currentColor"/><rect x="9.2" y="2.6" width="3" height="8.4" rx="1" fill="currentColor"/><rect x="13.8" y="0.4" width="3" height="10.6" rx="1" fill="currentColor"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 16 11"><path fill="currentColor" d="M8 2.1c2.2 0 4.2.85 5.7 2.25l1.2-1.2A10.1 10.1 0 0 0 8 .35 10.1 10.1 0 0 0 1.1 3.15l1.2 1.2A8 8 0 0 1 8 2.1Zm0 3.8c1.2 0 2.3.42 3.1 1.2l1.2-1.2A6.4 6.4 0 0 0 8 3.95a6.4 6.4 0 0 0-4.3 1.95l1.2 1.2c.8-.78 1.9-1.2 3.1-1.2Zm0 3.3c.8 0 1.5.28 2 .78L8 10.9 5.9 9.58c.5-.5 1.2-.78 2.1-.78Z"/></symbol>
+  <symbol id="i-battery" viewBox="0 0 25 11"><rect x="0.6" y="0.6" width="20" height="9.8" rx="3" fill="none" stroke="currentColor" stroke-opacity=".38"/><rect x="2.2" y="2.2" width="15.2" height="6.6" rx="1.6" fill="currentColor"/><path d="M22.6 3.5v4c1-.3 1.4-1 1.4-2s-.4-1.7-1.4-2Z" fill="currentColor" fill-opacity=".45"/></symbol>
+</svg>
+
+<header class="page-head">
+  <div>
+    <h1>DS-API · UI 升级方案 <em>历史抽屉</em></h1>
+    <p>抽屉占屏宽约 77%，右侧主页压暗。重点看搜索框、分组标题、选中态与底部账号卡的层次。</p>
+  </div>
+  <div class="meta">低保真设计稿 · 390 × 844<br />静态预览，用于确认视觉方向</div>
+</header>
+
+<main class="grid">
+
+  <!-- A -->
+  <section class="col">
+    <div class="col-head">
+      <span class="badge">方案 A</span>
+      <h2>轻盈玻璃 <span>Airy Glass</span></h2>
+      <p>灰底搜索胶囊 + 圆角选中行 + 描边账号卡，抽屉边缘大圆角与柔和投影。</p>
+    </div>
+    <div class="phone">
+      <div class="screen drawer-screen theme-a">
+        <div class="page-under"></div>
+        <div class="drawer">
+          <div class="drawer-top">
+            <div class="search"><svg class="ic"><use href="#i-search"/></svg>搜索对话内容...</div>
+            <div class="icon-btn"><svg class="ic"><use href="#i-list"/></svg></div>
+          </div>
+          <div class="drawer-scroll">
+            <div class="group-head"><span>今天</span><span class="spacer"></span><span class="count">6 个对话</span></div>
+            <div class="conv-list">
+              <div class="conv selected"><span class="t">产品介绍优化</span></div>
+              <div class="conv"><span class="t">Flutter 图片压缩方案</span></div>
+              <div class="conv"><span class="t">周末去杭州怎么玩</span></div>
+              <div class="conv"><span class="t">帮我解释一下这段报错</span></div>
+              <div class="conv"><span class="t">SQL 索引优化</span></div>
+              <div class="conv"><span class="t">外卖店铺文案</span></div>
+            </div>
+            <div class="group-head"><span>昨天</span><span class="spacer"></span><span class="count">3 个对话</span></div>
+            <div class="conv-list">
+              <div class="conv"><span class="t">Kotlin 协程是什么</span></div>
+              <div class="conv"><span class="t">给妈妈写一段生日祝福</span></div>
+              <div class="conv"><span class="t">读《人类简史》的笔记整理</span></div>
+            </div>
+          </div>
+          <div class="drawer-foot">
+            <div class="account">
+              <div class="avatar"><img src="../assets/icon_app.png" alt="" /></div>
+              <div class="txt">
+                <div class="t1">DeepSeek API Key</div>
+                <div class="t2">sk-8******f<span class="tag">已连接</span></div>
+              </div>
+              <svg class="ic"><use href="#i-chev"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="statusbar">
+          <span class="time">9:41</span>
+          <span class="sb-icons">
+            <svg width="17" height="11"><use href="#i-bars"/></svg>
+            <svg width="16" height="11"><use href="#i-wifi"/></svg>
+            <svg width="25" height="11"><use href="#i-battery"/></svg>
+          </span>
+        </div>
+        <div class="island"></div>
+        <div class="home-ind"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B -->
+  <section class="col">
+    <div class="col-head">
+      <span class="badge">方案 B</span>
+      <h2>编辑感极简 <span>Editorial</span></h2>
+      <p>胶囊描边搜索、无卡片的细线列表、选中态用左侧竖线，底部账号行同样用分割线收尾。</p>
+    </div>
+    <div class="phone">
+      <div class="screen drawer-screen theme-b">
+        <div class="page-under"></div>
+        <div class="drawer">
+          <div class="drawer-top">
+            <div class="search"><svg class="ic"><use href="#i-search"/></svg>搜索对话内容...</div>
+            <div class="icon-btn"><svg class="ic"><use href="#i-list"/></svg></div>
+          </div>
+          <div class="drawer-scroll">
+            <div class="group-head"><span>今天</span><span class="spacer"></span><span class="count">6 个对话</span></div>
+            <div class="conv-list">
+              <div class="conv selected"><span class="t">产品介绍优化</span></div>
+              <div class="conv"><span class="t">Flutter 图片压缩方案</span></div>
+              <div class="conv"><span class="t">周末去杭州怎么玩</span></div>
+              <div class="conv"><span class="t">帮我解释一下这段报错</span></div>
+              <div class="conv"><span class="t">SQL 索引优化</span></div>
+              <div class="conv"><span class="t">外卖店铺文案</span></div>
+            </div>
+            <div class="group-head"><span>昨天</span><span class="spacer"></span><span class="count">3 个对话</span></div>
+            <div class="conv-list">
+              <div class="conv"><span class="t">Kotlin 协程是什么</span></div>
+              <div class="conv"><span class="t">给妈妈写一段生日祝福</span></div>
+              <div class="conv"><span class="t">读《人类简史》的笔记整理</span></div>
+            </div>
+          </div>
+          <div class="drawer-foot">
+            <div class="account">
+              <div class="avatar"><img src="../assets/icon_app.png" alt="" /></div>
+              <div class="txt">
+                <div class="t1">DeepSeek API Key</div>
+                <div class="t2">sk-8******f<span class="tag">已连接</span></div>
+              </div>
+              <svg class="ic"><use href="#i-chev"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="statusbar">
+          <span class="time">9:41</span>
+          <span class="sb-icons">
+            <svg width="17" height="11"><use href="#i-bars"/></svg>
+            <svg width="16" height="11"><use href="#i-wifi"/></svg>
+            <svg width="25" height="11"><use href="#i-battery"/></svg>
+          </span>
+        </div>
+        <div class="island"></div>
+        <div class="home-ind"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C -->
+  <section class="col">
+    <div class="col-head">
+      <span class="badge">方案 C</span>
+      <h2>深潮渐变 <span>Deep Ocean</span></h2>
+      <p>浅蓝渐变底、蓝描边搜索框、渐变选中行与带光影的账号卡，和主界面保持同一套光感。</p>
+    </div>
+    <div class="phone">
+      <div class="screen drawer-screen theme-c">
+        <div class="page-under"></div>
+        <div class="drawer">
+          <div class="drawer-top">
+            <div class="search"><svg class="ic"><use href="#i-search"/></svg>搜索对话内容...</div>
+            <div class="icon-btn"><svg class="ic"><use href="#i-list"/></svg></div>
+          </div>
+          <div class="drawer-scroll">
+            <div class="group-head"><span>今天</span><span class="spacer"></span><span class="count">6 个对话</span></div>
+            <div class="conv-list">
+              <div class="conv selected"><span class="t">产品介绍优化</span></div>
+              <div class="conv"><span class="t">Flutter 图片压缩方案</span></div>
+              <div class="conv"><span class="t">周末去杭州怎么玩</span></div>
+              <div class="conv"><span class="t">帮我解释一下这段报错</span></div>
+              <div class="conv"><span class="t">SQL 索引优化</span></div>
+              <div class="conv"><span class="t">外卖店铺文案</span></div>
+            </div>
+            <div class="group-head"><span>昨天</span><span class="spacer"></span><span class="count">3 个对话</span></div>
+            <div class="conv-list">
+              <div class="conv"><span class="t">Kotlin 协程是什么</span></div>
+              <div class="conv"><span class="t">给妈妈写一段生日祝福</span></div>
+              <div class="conv"><span class="t">读《人类简史》的笔记整理</span></div>
+            </div>
+          </div>
+          <div class="drawer-foot">
+            <div class="account">
+              <div class="avatar"><img src="../assets/icon_app.png" alt="" /></div>
+              <div class="txt">
+                <div class="t1">DeepSeek API Key</div>
+                <div class="t2">sk-8******f<span class="tag">已连接</span></div>
+              </div>
+              <svg class="ic"><use href="#i-chev"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="statusbar">
+          <span class="time">9:41</span>
+          <span class="sb-icons">
+            <svg width="17" height="11"><use href="#i-bars"/></svg>
+            <svg width="16" height="11"><use href="#i-wifi"/></svg>
+            <svg width="25" height="11"><use href="#i-battery"/></svg>
+          </span>
+        </div>
+        <div class="island"></div>
+        <div class="home-ind"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="footer-note">抽屉宽度按屏宽 77% 计算；右滑打开、左滑关闭的交互保持不变。</div>
+
+</body>
+</html>

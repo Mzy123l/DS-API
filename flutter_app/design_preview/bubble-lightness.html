@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DS-API · 气泡浅度 4 档</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #07080c; }
+  body {
+    width: 860px; margin: 0 auto; padding: 18px 16px 10px;
+    font-family: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", "Noto Sans SC", -apple-system, sans-serif;
+    color: #fff; zoom: 0.95;
+  }
+  .page-head { margin-bottom: 12px; }
+  .page-head h1 { font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+  .page-head h1 em {
+    font-style: normal; background: linear-gradient(120deg, #8f9dff, #5d78ff);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .page-head p { color: #8a91a5; font-size: 11.5px; margin-top: 4px; }
+
+  .grid { display: grid; grid-template-columns: 400px 400px; gap: 14px 36px; justify-content: center; }
+  .cell { width: 400px; }
+  .label { display: flex; align-items: baseline; gap: 8px; margin-bottom: 5px; color: #8a91a5; font-size: 10.5px; }
+  .label b { color: #d6dae7; font-size: 12px; font-weight: 600; }
+  .label code { color: #7f88a8; font-family: Consolas, monospace; font-size: 10px; }
+
+  .canvas {
+    width: 400px; height: 165px; border-radius: 18px; padding: 12px;
+    background: linear-gradient(180deg, #f7f9ff 0%, #fff 32%, #fff 100%);
+    display: flex; flex-direction: column; gap: 8px; overflow: hidden;
+    color: #14171f;
+  }
+  .row { display: flex; justify-content: flex-end; }
+  .bubble-user {
+    max-width: 55%; padding: 6px 11px; border-radius: 15px;
+    background: linear-gradient(125deg, #fff, #f0f3ff 54%, #f7f0ff);
+    border: 1px solid #e9edf7; font-size: 12.5px; color: #2e3340;
+  }
+  .assistant {
+    max-width: 90%; padding: 8px 13px; border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, .9);
+    box-shadow: 0 0 0 1px rgba(77, 107, 254, .05), 0 8px 20px -20px rgba(41, 68, 210, .4);
+    font-size: 12.5px; line-height: 1.5;
+  }
+  .assistant p { margin: 0 0 4px; }
+  .assistant p:last-child { margin-bottom: 0; }
+  .assistant pre {
+    margin: 0; background: #fff; border: 1px solid #e9ecf4; border-radius: 8px;
+    padding: 5px 9px; font-family: Consolas, monospace; font-size: 10px;
+    line-height: 1.5; color: #2a2f3d; white-space: pre;
+  }
+
+  .l1 { background: linear-gradient(135deg, #f4f6ff, #faf9ff); }
+  .l2 { background: linear-gradient(135deg, #f1f4ff, #f8f7ff); }
+  .l3 { background: linear-gradient(135deg, #eef2ff, #f6f5ff); }
+  .l4 { background: linear-gradient(135deg, #ebefff, #f4f3ff); }
+
+  .hint { margin-top: 12px; color: #6f768a; font-size: 11px; text-align: center; }
+  .hint b { color: #aeb8ff; }
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <h1>DS-API · 气泡 <em>浅度 4 档</em></h1>
+  <p>色相固定是品牌蓝紫（#4D6BFE 加白），只改浅度。</p>
+</header>
+
+<div class="grid">
+
+  <section class="cell">
+    <div class="label"><b>01</b><code>#F4F6FF → #FAF9FF</code></div>
+    <div class="canvas">
+      <div class="row"><span class="bubble-user">你好</span></div>
+      <div class="assistant l1"><p>你好，有什么可以帮你的？</p></div>
+      <div class="assistant l1"><p>协程执行到挂起点时保存状态并让出线程。</p><pre>suspend fun load(): User {}</pre></div>
+    </div>
+  </section>
+
+  <section class="cell">
+    <div class="label"><b>02</b><code>#F1F4FF → #F8F7FF</code></div>
+    <div class="canvas">
+      <div class="row"><span class="bubble-user">你好</span></div>
+      <div class="assistant l2"><p>你好，有什么可以帮你的？</p></div>
+      <div class="assistant l2"><p>协程执行到挂起点时保存状态并让出线程。</p><pre>suspend fun load(): User {}</pre></div>
+    </div>
+  </section>
+
+  <section class="cell">
+    <div class="label"><b>03</b><code>#EEF2FF → #F6F5FF</code></div>
+    <div class="canvas">
+      <div class="row"><span class="bubble-user">你好</span></div>
+      <div class="assistant l3"><p>你好，有什么可以帮你的？</p></div>
+      <div class="assistant l3"><p>协程执行到挂起点时保存状态并让出线程。</p><pre>suspend fun load(): User {}</pre></div>
+    </div>
+  </section>
+
+  <section class="cell">
+    <div class="label"><b>04</b><code>#EBEFFF → #F4F3FF</code></div>
+    <div class="canvas">
+      <div class="row"><span class="bubble-user">你好</span></div>
+      <div class="assistant l4"><p>你好，有什么可以帮你的？</p></div>
+      <div class="assistant l4"><p>协程执行到挂起点时保存状态并让出线程。</p><pre>suspend fun load(): User {}</pre></div>
+    </div>
+  </section>
+
+</div>
+
+<div class="hint">01 最浅，04 最显色。选编号即可；如果都不对，直接给我一个色值。</div>
+
+</body>
+</html>

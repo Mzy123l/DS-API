@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DS-API · 回答正文排版设计</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #07080c; }
+  body {
+    width: 560px; margin: 0 auto; padding: 20px 16px 10px;
+    font-family: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", "Noto Sans SC", -apple-system, sans-serif;
+    color: #fff; zoom: 0.78;
+  }
+  .page-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 14px; }
+  .page-head h1 { font-size: 24px; font-weight: 700; letter-spacing: -.02em; }
+  .page-head h1 em {
+    font-style: normal; background: linear-gradient(120deg, #8f9dff, #5d78ff);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .page-head p { color: #8a91a5; font-size: 12.5px; line-height: 1.7; margin-top: 6px; }
+  .page-head .meta { color: #5b6277; font-size: 11.5px; text-align: right; line-height: 1.8; }
+
+  .phone {
+    width: 390px; height: 844px; padding: 8px; border-radius: 56px; margin: 0 auto;
+    background: linear-gradient(150deg, #464c5e 0%, #121419 24%, #080a0f 62%, #262a36 100%);
+    box-shadow: 0 40px 80px -24px rgba(0, 0, 0, .9), 0 0 0 1px rgba(255, 255, 255, .1);
+    position: relative;
+  }
+  .screen {
+    width: 100%; height: 100%; border-radius: 48px; overflow: hidden;
+    background: #fff; position: relative;
+  }
+  .island {
+    position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+    width: 108px; height: 31px; background: #000; border-radius: 999px; z-index: 10;
+  }
+  .home-ind {
+    position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+    width: 132px; height: 5px; border-radius: 999px; background: rgba(0, 0, 0, .82); z-index: 10;
+  }
+  .statusbar {
+    height: 54px; display: flex; align-items: flex-end; justify-content: space-between;
+    padding: 0 26px 9px; color: #111318;
+  }
+  .statusbar .time { font-size: 14px; font-weight: 600; }
+  .sb-icons { display: flex; gap: 5px; align-items: center; }
+  .sb-icons svg { display: block; }
+
+  .stage {
+    padding: 0 16px; height: 774px; overflow: hidden;
+    background: linear-gradient(180deg, #f7f9ff 0%, #fff 30%, #fff 100%);
+  }
+
+  .msg-user { display: flex; justify-content: flex-end; margin-top: 8px; }
+  .bubble {
+    max-width: 80%; padding: 11px 15px; border-radius: 20px;
+    background: linear-gradient(125deg, #fff, #f0f3ff 54%, #f7f0ff);
+    border: 1px solid #e9edf7; font-size: 15px; line-height: 1.5; color: #2e3340;
+  }
+  .think {
+    display: inline-flex; align-items: center; gap: 3px; margin-top: 14px;
+    padding: 3px 8px; border-radius: 7px; border: 1px solid #edf0f6;
+    background: rgba(255, 255, 255, .7); font-size: 11.5px; color: #6e7899;
+  }
+  .answer { margin-top: 10px; font-size: 16.5px; line-height: 1.62; color: #14171f; }
+  .answer p { margin: 0; }
+  .answer h2 { font-size: 17px; font-weight: 600; line-height: 1.4; margin: 6px 0 0; }
+  .answer ul { margin: 0; padding-left: 24px; }
+  .answer li { line-height: 1.62; }
+  .answer blockquote {
+    margin: 6px 0; padding-left: 14px; border-left: 2px solid #e6e6e6;
+    color: #7e7f84; font-size: 16px; line-height: 1.55;
+  }
+  .answer code.inline {
+    font-family: Consolas, "JetBrains Mono", monospace; font-size: 15px; color: #7e7f84;
+  }
+  .answer pre { margin: 8px 0; border-radius: 10px; background: #f7f7f8; overflow: hidden; }
+  .answer pre .bar {
+    display: flex; justify-content: space-between; padding: 6px 12px;
+    font-size: 12px; color: #9a9a9a;
+  }
+  .answer pre code {
+    display: block; padding: 10px 12px 12px; border-top: 1px solid #eaeaec;
+    font-family: Consolas, "JetBrains Mono", monospace; font-size: 13px; line-height: 1.5;
+    color: #1a1a1a; white-space: pre;
+  }
+  .answer table { width: 100%; border-collapse: collapse; margin: 6px 0; font-size: 15px; }
+  .answer table th, .answer table td { border: 1px solid #e6e6e6; padding: 8px 12px; text-align: left; }
+  .answer table th { font-weight: 600; }
+  .answer hr { border: 0; border-top: 1px solid #e6e6e6; margin: 8px 0; }
+
+  /* ---------- 设计版 ---------- */
+  .design .answer { line-height: 1.7; }
+  .design .answer p { margin: 0 0 12px; }
+  .design .answer h2 {
+    font-size: 19.5px; font-weight: 700; letter-spacing: -.01em; line-height: 1.38;
+    color: #10131a; margin: 20px 0 8px;
+  }
+  .design .answer h2:first-child { margin-top: 0; }
+  .design .answer ul { list-style: none; padding-left: 18px; margin: 0 0 14px; }
+  .design .answer li { position: relative; margin-bottom: 8px; line-height: 1.7; }
+  .design .answer li:last-child { margin-bottom: 0; }
+  .design .answer li::before {
+    content: ""; position: absolute; left: -14px; top: .72em;
+    width: 6px; height: 6px; border-radius: 50%; background: #8fa0d8;
+  }
+  .design .answer blockquote {
+    margin: 0 0 14px; padding: 12px 14px; background: #f7f8fb;
+    border-left: 3px solid #d8deec; border-radius: 10px;
+    color: #5f6577; font-size: 15.5px; line-height: 1.68;
+  }
+  .design .answer code.inline {
+    font-size: 14.5px; color: #3a4054; background: #f2f4f9;
+    border-radius: 5px; padding: 1px 5px;
+  }
+  .design .answer pre {
+    margin: 0 0 14px; background: #fbfcfe;
+    border: 1px solid #eceef4; border-radius: 14px;
+  }
+  .design .answer pre .bar {
+    padding: 8px 12px; border-bottom: 1px solid #eff1f6;
+    font-size: 11.5px; letter-spacing: .02em; color: #8a91a5;
+  }
+  .design .answer pre code {
+    border-top: 0; padding: 12px 13px 13px; font-size: 13.5px; line-height: 1.7;
+    color: #2a2f3d;
+  }
+  .design .answer table { border-collapse: collapse; margin: 0 0 14px; font-size: 14.5px; }
+  .design .answer table th, .design .answer td { border: 0; padding: 10px 12px; text-align: left; }
+  .design .answer table th {
+    font-weight: 600; color: #5f6577; border-bottom: 1px solid #e0e5ef;
+  }
+  .design .answer table td { border-bottom: 1px solid #eceef4; }
+  .design .answer hr { border-top: 1px solid #edeff4; margin: 16px 0; }
+
+  .note {
+    margin-top: 14px; border-top: 1px solid #1b1e26; padding-top: 10px;
+    color: #8a91a5; font-size: 11.5px; line-height: 1.9;
+  }
+  .note b { color: #aeb8ff; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bars" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx="1" fill="currentColor"/><rect x="4.6" y="5" width="3" height="6" rx="1" fill="currentColor"/><rect x="9.2" y="2.6" width="3" height="8.4" rx="1" fill="currentColor"/><rect x="13.8" y="0.4" width="3" height="10.6" rx="1" fill="currentColor"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 16 11"><path fill="currentColor" d="M8 2.1c2.2 0 4.2.85 5.7 2.25l1.2-1.2A10.1 10.1 0 0 0 8 .35 10.1 10.1 0 0 0 1.1 3.15l1.2 1.2A8 8 0 0 1 8 2.1Zm0 3.8c1.2 0 2.3.42 3.1 1.2l1.2-1.2A6.4 6.4 0 0 0 8 3.95a6.4 6.4 0 0 0-4.3 1.95l1.2 1.2c.8-.78 1.9-1.2 3.1-1.2Zm0 3.3c.8 0 1.5.28 2 .78L8 10.9 5.9 9.58c.5-.5 1.2-.78 2.1-.78Z"/></symbol>
+  <symbol id="i-battery" viewBox="0 0 25 11"><rect x="0.6" y="0.6" width="20" height="9.8" rx="3" fill="none" stroke="currentColor" stroke-opacity=".38"/><rect x="2.2" y="2.2" width="15.2" height="6.6" rx="1.6" fill="currentColor"/><path d="M22.6 3.5v4c1-.3 1.4-1 1.4-2s-.4-1.7-1.4-2Z" fill="currentColor" fill-opacity=".45"/></symbol>
+</svg>
+
+<header class="page-head">
+  <div>
+    <h1>DS-API · 回答正文 <em>排版设计</em></h1>
+    <p>只改"模型输出正文"的排版系统，不改消息结构。</p>
+  </div>
+  <div class="meta" id="modeLabel">设计稿 · 当前</div>
+</header>
+
+<div class="phone" id="phone">
+  <div class="screen" id="screen">
+    <div class="stage">
+      <div class="statusbar">
+        <span class="time">9:41</span>
+        <span class="sb-icons">
+          <svg width="17" height="11"><use href="#i-bars"/></svg>
+          <svg width="16" height="11"><use href="#i-wifi"/></svg>
+          <svg width="25" height="11"><use href="#i-battery"/></svg>
+        </span>
+      </div>
+      <div class="msg-user">
+        <div class="bubble">帮我把这段回答的排版优化一下，读起来太挤了。</div>
+      </div>
+      <div class="think">✦ 已思考（用时 6 秒）›</div>
+      <div class="answer">
+        <h2>为什么要调整排版</h2>
+        <p>长回答最难读的地方，是段落之间没有呼吸感；标题和正文字号又太接近。</p>
+        <p>调整后有三个变化：</p>
+        <ul>
+          <li>段落间距 12px，长文不再挤成一块</li>
+          <li>标题 19.5 / 17，段前留白</li>
+          <li>行内代码 <code class="inline">MarkdownStyleSheet</code> 加浅灰底</li>
+        </ul>
+        <blockquote>引用是一块旁注：浅灰底 + 细线，和正文区分但不要抢视线。</blockquote>
+        <pre><div class="bar"><span>dart</span><span>复制</span></div><code>p: TextStyle(fontSize: 16.5, height: 1.7),</code></pre>
+        <table>
+          <tr><th>元素</th><th>现在</th><th>设计</th></tr>
+          <tr><td>正文行高</td><td>1.62</td><td>1.7</td></tr>
+          <tr><td>标题字号</td><td>17</td><td>19.5</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="island"></div>
+    <div class="home-ind"></div>
+  </div>
+</div>
+
+<div class="note" id="note"></div>
+
+<script>
+  var mode = new URLSearchParams(location.search).get('mode') || 'design';
+  document.getElementById('screen').classList.add(mode);
+  document.getElementById('modeLabel').innerHTML = mode === 'design'
+    ? '设计稿 · 新版'
+    : '设计稿 · 现状';
+  document.getElementById('note').innerHTML = mode === 'design'
+    ? '<b>设计要点</b> 正文 16.5 / 1.7 · 段落 12px · 标题 19.5 / 17 · 圆点列表 · 浅底引用 · 代码块白卡'
+    : '<b>现状</b> 段落无间距 · 标题仅 17px · 行内代码与引用无底色 · 表格全框线';
+</script>
+
+</body>
+</html>

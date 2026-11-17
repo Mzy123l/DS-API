@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DS-API · 助手气泡样式 4 选 1</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #07080c; }
+  body {
+    width: 900px; margin: 0 auto; padding: 18px 16px 10px;
+    font-family: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", "Noto Sans SC", -apple-system, sans-serif;
+    color: #fff; zoom: 0.66;
+  }
+  .page-head { margin-bottom: 16px; }
+  .page-head h1 { font-size: 28px; font-weight: 700; letter-spacing: -.02em; }
+  .page-head h1 em {
+    font-style: normal; background: linear-gradient(120deg, #8f9dff, #5d78ff);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .page-head p { color: #8a91a5; font-size: 13px; margin-top: 6px; }
+
+  .grid { display: grid; grid-template-columns: 390px 390px; gap: 40px 40px; justify-content: center; }
+  .card { width: 390px; }
+  .card-head { margin-bottom: 10px; }
+  .badge {
+    display: inline-block; font-size: 10px; letter-spacing: .14em; color: #a3acff;
+    background: rgba(124, 141, 255, .1); border: 1px solid rgba(124, 141, 255, .26);
+    border-radius: 999px; padding: 3px 9px; font-weight: 600;
+  }
+  .card-head h2 { font-size: 18px; font-weight: 600; margin-top: 7px; }
+  .card-head p { color: #868da1; font-size: 11.5px; line-height: 1.7; margin-top: 4px; }
+
+  /* 展示画布：模仿聊天区白底 */
+  .canvas {
+    width: 390px; height: 430px; border-radius: 26px; padding: 16px;
+    background: linear-gradient(180deg, #f7f9ff 0%, #fff 32%, #fff 100%);
+    border: 1px solid rgba(255, 255, 255, .08);
+    overflow: hidden; display: flex; flex-direction: column; gap: 14px;
+    color: #14171f; position: relative;
+  }
+  .msg-user { display: flex; justify-content: flex-end; }
+  .bubble-user {
+    max-width: 80%; padding: 11px 15px; border-radius: 20px;
+    background: linear-gradient(125deg, #fff, #f0f3ff 54%, #f7f0ff);
+    border: 1px solid #e9edf7; font-size: 15px; line-height: 1.5; color: #2e3340;
+  }
+
+  /* 助手气泡公共排版 */
+  .assistant { max-width: 92%; padding: 12px 16px; }
+  .assistant.short { max-width: 80%; }
+  .assistant h3 { font-size: 15.5px; font-weight: 600; margin: 0 0 6px; color: #10131a; }
+  .assistant p { margin: 0 0 9px; }
+  .assistant p:last-child { margin-bottom: 0; }
+  .assistant ul { margin: 0 0 9px; padding-left: 18px; }
+  .assistant li { margin-bottom: 3px; }
+  .assistant code {
+    background: rgba(20, 30, 60, .06); border-radius: 5px; padding: 1px 5px;
+    font-family: Consolas, monospace; font-size: 14px; color: #3a4054;
+  }
+  .assistant pre {
+    margin: 0; border-radius: 10px; padding: 10px 12px;
+    font-family: Consolas, monospace; font-size: 12.5px; line-height: 1.6;
+    overflow: hidden; white-space: pre;
+  }
+  .assistant .bar {
+    display: flex; justify-content: space-between; font-size: 10.5px;
+    color: #9aa1b2; margin-bottom: 5px;
+  }
+
+  /* A 极简灰 */
+  .style-a .assistant {
+    background: #f2f3f7; border-radius: 20px;
+  }
+  .style-a .assistant pre { background: #fff; color: #2a2f3d; }
+
+  /* B 白卡片 */
+  .style-b .assistant {
+    background: #fff; border-radius: 20px; border: 1px solid #eef0f5;
+    box-shadow: 0 6px 20px -16px rgba(20, 30, 80, .28);
+  }
+  .style-b .assistant pre { background: #f7f8fb; color: #2a2f3d; }
+
+  /* C 浅蓝渐变 */
+  .style-c .assistant {
+    background: linear-gradient(135deg, #f4f6ff 0%, #faf8ff 100%);
+    border-radius: 20px;
+    box-shadow: 0 4px 16px -14px rgba(41, 68, 210, .35);
+  }
+  .style-c .assistant pre { background: #fff; color: #2a2f3d; }
+
+  /* D 描边气泡 */
+  .style-d .assistant {
+    background: rgba(255, 255, 255, .55);
+    border: 1.2px solid #dde3f0; border-radius: 20px;
+  }
+  .style-d .assistant pre { background: #fff; color: #2a2f3d; }
+
+  .tip { margin-top: 18px; color: #6f768a; font-size: 12px; line-height: 1.9; }
+  .tip b { color: #aeb8ff; }
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <h1>DS-API · 助手气泡 <em>4 选 1</em></h1>
+  <p>同一段内容，四种气泡质感。选中一个我再按它实现，其余不动。</p>
+</header>
+
+<div class="grid">
+
+  <!-- A -->
+  <section class="card style-a">
+    <div class="card-head">
+      <span class="badge">A</span>
+      <h2>极简灰</h2>
+      <p>iOS 消息气泡：纯色、无边框、无阴影，最干净。</p>
+    </div>
+    <div class="canvas">
+      <div class="msg-user"><div class="bubble-user">你好</div></div>
+      <div class="assistant short" style="font-size:15.5px;line-height:1.6">你好，有什么可以帮你的？</div>
+      <div class="msg-user"><div class="bubble-user">展开讲讲协程的挂起点。</div></div>
+      <div class="assistant" style="font-size:15.5px;line-height:1.6">
+        <h3>挂起点</h3>
+        <p>协程执行到 <code>suspend</code> 时保存状态并让出线程，结果回来再从原处恢复。</p>
+        <pre><div class="bar"><span>kotlin</span><span>复制</span></div>suspend fun load(): User {
+    return api.fetchUser()
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- B -->
+  <section class="card style-b">
+    <div class="card-head">
+      <span class="badge">B</span>
+      <h2>白卡片</h2>
+      <p>白色底 + 细边框 + 极淡投影，和输入卡同一套语言。</p>
+    </div>
+    <div class="canvas">
+      <div class="msg-user"><div class="bubble-user">你好</div></div>
+      <div class="assistant short" style="font-size:15.5px;line-height:1.6">你好，有什么可以帮你的？</div>
+      <div class="msg-user"><div class="bubble-user">展开讲讲协程的挂起点。</div></div>
+      <div class="assistant" style="font-size:15.5px;line-height:1.6">
+        <h3>挂起点</h3>
+        <p>协程执行到 <code>suspend</code> 时保存状态并让出线程，结果回来再从原处恢复。</p>
+        <pre><div class="bar"><span>kotlin</span><span>复制</span></div>suspend fun load(): User {
+    return api.fetchUser()
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- C -->
+  <section class="card style-c">
+    <div class="card-head">
+      <span class="badge">C</span>
+      <h2>浅蓝渐变</h2>
+      <p>和用户气泡同色系但更淡，左右两侧有呼应。</p>
+    </div>
+    <div class="canvas">
+      <div class="msg-user"><div class="bubble-user">你好</div></div>
+      <div class="assistant short" style="font-size:15.5px;line-height:1.6">你好，有什么可以帮你的？</div>
+      <div class="msg-user"><div class="bubble-user">展开讲讲协程的挂起点。</div></div>
+      <div class="assistant" style="font-size:15.5px;line-height:1.6">
+        <h3>挂起点</h3>
+        <p>协程执行到 <code>suspend</code> 时保存状态并让出线程，结果回来再从原处恢复。</p>
+        <pre><div class="bar"><span>kotlin</span><span>复制</span></div>suspend fun load(): User {
+    return api.fetchUser()
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- D -->
+  <section class="card style-d">
+    <div class="card-head">
+      <span class="badge">D</span>
+      <h2>线框气泡</h2>
+      <p>极浅白底 + 1.2px 蓝灰描边，最轻、最不像"色块"。</p>
+    </div>
+    <div class="canvas">
+      <div class="msg-user"><div class="bubble-user">你好</div></div>
+      <div class="assistant short" style="font-size:15.5px;line-height:1.6">你好，有什么可以帮你的？</div>
+      <div class="msg-user"><div class="bubble-user">展开讲讲协程的挂起点。</div></div>
+      <div class="assistant" style="font-size:15.5px;line-height:1.6">
+        <h3>挂起点</h3>
+        <p>协程执行到 <code>suspend</code> 时保存状态并让出线程，结果回来再从原处恢复。</p>
+        <pre><div class="bar"><span>kotlin</span><span>复制</span></div>suspend fun load(): User {
+    return api.fetchUser()
+}</pre>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="tip"><b>说明：</b>四种都保证气泡内代码块、列表、标题可读；选完我按选中样式实现「本会话所有回答进气泡」的开关。</div>
+
+</body>
+</html>
+
+

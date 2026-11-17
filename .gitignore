@@ -1,0 +1,44 @@
+# 构建产物
+build/
+android-build/
+*.apk
+*.aab
+
+# 本地密钥与环境
+.env
+.env.local
+.env.*.local
+keystore/
+
+# Qt/IDE 缓存
+.qt/
+.qmake.stash
+CMakeLists.txt.user*
+
+# 日志与临时
+*.log
+*.tmp
+*.autosave
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+
+# 中转服务本地数据
+server/data/
+server/.relay_token_hash
+server/tls/
+
+# UI 设计过程产物（气泡配色/排版的对比稿，纯二进制、体积大、代码零引用）
+# 可读的 HTML 预览稿在 flutter_app/design_preview/，那个入库
+design/
+
+# Flutter web 脚手架：本项目只做安卓端，web 目录由
+# `flutter create . --platforms web` 生成，不需要入库
+flutter_app/web/
+
+# 系统
+.DS_Store
+Thumbs.db

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DS-API · 浅蓝紫气泡</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #07080c; }
+  body {
+    width: 460px; margin: 0 auto; padding: 20px 16px 12px; zoom: 0.9;
+    font-family: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", "Noto Sans SC", -apple-system, sans-serif;
+    color: #fff;
+  }
+  .page-head { margin-bottom: 14px; }
+  .page-head h1 { font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+  .page-head h1 em {
+    font-style: normal; background: linear-gradient(120deg, #b9a4ff, #8f9dff);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .page-head p { color: #8a91a5; font-size: 12px; margin-top: 5px; line-height: 1.8; }
+
+  .canvas {
+    width: 420px; margin: 12px auto; border-radius: 20px; padding: 14px;
+    background: linear-gradient(180deg, #f7f9ff 0%, #fff 32%, #fff 100%);
+    display: flex; flex-direction: column; gap: 9px; overflow: hidden;
+    color: #14171f;
+  }
+  .label { display: flex; align-items: baseline; gap: 8px; margin: 0 auto 2px; width: 420px; color: #8a91a5; font-size: 11px; }
+  .label b { color: #d6dae7; font-size: 12.5px; font-weight: 600; }
+  .label code { color: #8a90b6; font-family: Consolas, monospace; font-size: 10.5px; }
+
+  .msg-user { display: flex; justify-content: flex-end; }
+  .bubble-user {
+    max-width: 70%; padding: 9px 13px; border-radius: 17px;
+    background: linear-gradient(125deg, #fff, #f0f3ff 54%, #f7f0ff);
+    border: 1px solid #e9edf7; font-size: 13.5px; color: #2e3340;
+  }
+  .assistant {
+    max-width: 92%; padding: 10px 14px; border-radius: 17px;
+    border: 1px solid rgba(255, 255, 255, .9);
+    box-shadow: 0 0 0 1px rgba(77, 107, 254, .05), 0 8px 20px -20px rgba(41, 68, 210, .45);
+    font-size: 13.5px; line-height: 1.55;
+  }
+  .assistant p { margin: 0 0 5px; }
+  .assistant p:last-child { margin-bottom: 0; }
+  .assistant pre {
+    margin: 0; background: #fff; border: 1px solid #e9ecf4; border-radius: 8px;
+    padding: 6px 9px; font-family: Consolas, monospace; font-size: 10.5px;
+    line-height: 1.5; color: #2a2f3d; white-space: pre;
+  }
+
+  .lav1 { background: linear-gradient(135deg, #ece7ff, #f2edff 55%, #f8f4ff); }
+  .lav2 { background: linear-gradient(135deg, #f1ecff, #f7f2ff 55%, #fbf8ff); }
+  .lav3 { background: linear-gradient(135deg, #e9eaff, #f1edff 55%, #f8f5ff); }
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <h1>DS-API · 气泡 <em>浅蓝紫</em></h1>
+  <p>偏紫的浅色，不是把蓝冲淡成白。三个档位只差一点。</p>
+</header>
+
+<div class="label"><b>1</b>薰衣草<code>#ECE7FF → #F8F4FF</code></div>
+<div class="canvas">
+  <div class="msg-user"><span class="bubble-user">你好</span></div>
+  <div class="assistant lav1"><p>你好，有什么可以帮你的？</p></div>
+  <div class="assistant lav1">
+    <p>协程执行到挂起点时保存状态并让出线程，结果回来再从原处恢复。</p>
+    <pre>suspend fun load(): User {
+    return api.fetchUser()
+}</pre>
+  </div>
+</div>
+
+<div class="label"><b>2</b>更浅的薰衣草<code>#F1ECFF → #FBF8FF</code></div>
+<div class="canvas">
+  <div class="msg-user"><span class="bubble-user">你好</span></div>
+  <div class="assistant lav2"><p>你好，有什么可以帮你的？</p></div>
+  <div class="assistant lav2">
+    <p>协程执行到挂起点时保存状态并让出线程，结果回来再从原处恢复。</p>
+    <pre>suspend fun load(): User {
+    return api.fetchUser()
+}</pre>
+  </div>
+</div>
+
+<div class="label"><b>3</b>偏蓝的浅紫<code>#E9EAFF → #F8F5FF</code></div>
+<div class="canvas">
+  <div class="msg-user"><span class="bubble-user">你好</span></div>
+  <div class="assistant lav3"><p>你好，有什么可以帮你的？</p></div>
+  <div class="assistant lav3">
+    <p>协程执行到挂起点时保存状态并让出线程，结果回来再从原处恢复。</p>
+    <pre>suspend fun load(): User {
+    return api.fetchUser()
+}</pre>
+  </div>
+</div>
+
+</body>
+</html>
+
+

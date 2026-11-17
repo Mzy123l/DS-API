@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DS-API · 气泡换色系</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #07080c; }
+  body {
+    width: 820px; margin: 0 auto; padding: 16px 16px 8px;
+    font-family: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", "Noto Sans SC", -apple-system, sans-serif;
+    color: #fff; zoom: 0.92;
+  }
+  .page-head { margin-bottom: 10px; }
+  .page-head h1 { font-size: 21px; font-weight: 700; letter-spacing: -.02em; }
+  .page-head h1 em {
+    font-style: normal; background: linear-gradient(90deg, #8fd8ea, #f0b6c8, #d9c08a);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .page-head p { color: #8a91a5; font-size: 11px; margin-top: 3px; }
+
+  .grid { display: grid; grid-template-columns: 380px 380px; gap: 14px 40px; justify-content: center; }
+  .cell { width: 380px; }
+  .label { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; color: #8a91a5; font-size: 10px; }
+  .label b { color: #d6dae7; font-size: 11.5px; }
+  .label code { font-family: Consolas, monospace; }
+
+  .canvas {
+    width: 380px; height: 160px; border-radius: 16px; padding: 11px;
+    background: linear-gradient(180deg, #f7f9ff 0%, #fff 32%, #fff 100%);
+    display: flex; flex-direction: column; gap: 7px; overflow: hidden;
+    color: #14171f;
+  }
+  .row { display: flex; justify-content: flex-end; }
+  .bubble-user {
+    max-width: 55%; padding: 6px 10px; border-radius: 14px;
+    background: linear-gradient(125deg, #fff, #f0f3ff 54%, #f7f0ff);
+    border: 1px solid #e9edf7; font-size: 11.5px; color: #2e3340;
+  }
+  .assistant {
+    max-width: 90%; padding: 7px 12px; border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, .6);
+    box-shadow: 0 8px 20px -20px rgba(40, 60, 100, .3);
+    font-size: 11.5px; line-height: 1.5; color: #10131a;
+  }
+  .assistant p { margin: 0 0 4px; }
+  .assistant p:last-child { margin-bottom: 0; }
+  .assistant pre {
+    margin: 0; background: rgba(255, 255, 255, .6); border: 1px solid rgba(255, 255, 255, .6);
+    border-radius: 7px; padding: 4px 8px; font-family: Consolas, monospace;
+    font-size: 9.5px; line-height: 1.5; color: #2a2f3d; white-space: pre;
+  }
+
+  .mint { background: linear-gradient(135deg, #c8f0d8 0%, #e6f9ef 100%); }
+  .sky { background: linear-gradient(135deg, #c3e8f7 0%, #e4f5fb 100%); }
+  .peach { background: linear-gradient(135deg, #fadfc9 0%, #fdf1e6 100%); }
+  .pink { background: linear-gradient(135deg, #f8d7e3 0%, #fdf0f5 100%); }
+  .sand { background: linear-gradient(135deg, #f0e5c9 0%, #faf4e5 100%); }
+  .mist { background: linear-gradient(135deg, #e3e8f0 0%, #f4f6fa 100%); }
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <h1>DS-API · 气泡 <em>换色系</em></h1>
+  <p>不再在蓝紫里打转，直接换 6 个色系，都是浅色渐变。</p>
+</header>
+
+<div class="grid">
+
+  <section class="cell">
+    <div class="label"><b>01</b>薄荷绿<code>#C8F0D8 → #E6F9EF</code></div>
+    <div class="canvas">
+      <div class="row"><span class="bubble-user">你好</span></div>
+      <div class="assistant mint"><p>你好，有什么可以帮你的？</p></div>
+      <div class="assistant mint"><p>协程执行到挂起点时保存状态。</p><pre>suspend fun load(): User {}</pre></div>
+    </div>
+  </section>
+
+  <section class="cell">
+    <div class="label"><b>02</b>天空青<code>#C3E8F7 → #E4F5FB</code></div>
+    <div class="canvas">
+      <div class="row"><span class="bubble-user">你好</span></div>
+      <div class="assistant sky"><p>你好，有什么可以帮你的？</p></div>
+      <div class="assistant sky"><p>协程执行到挂起点时保存状态。</p><pre>suspend fun load(): User {}</pre></div>
+    </div>
+  </section>
+
+  <section class="cell">
+    <div class="label"><b>03</b>杏橙<code>#FADFC9 → #FDF1E6</code></div>
+    <div class="canvas">
+      <div class="row"><span class="bubble-user">你好</span></div>
+      <div class="assistant peach"><p>你好，有什么可以帮你的？</p></div>
+      <div class="assistant peach"><p>协程执行到挂起点时保存状态。</p><pre>suspend fun load(): User {}</pre></div>
+    </div>
+  </section>
+
+  <section class="cell">
+    <div class="label"><b>04</b>樱粉<code>#F8D7E3 → #FDF0F5</code></div>
+    <div class="canvas">
+      <div class="row"><span class="bubble-user">你好</span></div>
+      <div class="assistant pink"><p>你好，有什么可以帮你的？</p></div>
+      <div class="assistant pink"><p>协程执行到挂起点时保存状态。</p><pre>suspend fun load(): User {}</pre></div>
+    </div>
+  </section>
+
+  <section class="cell">
+    <div class="label"><b>05</b>沙金<code>#F0E5C9 → #FAF4E5</code></div>
+    <div class="canvas">
+      <div class="row"><span class="bubble-user">你好</span></div>
+      <div class="assistant sand"><p>你好，有什么可以帮你的？</p></div>
+      <div class="assistant sand"><p>协程执行到挂起点时保存状态。</p><pre>suspend fun load(): User {}</pre></div>
+    </div>
+  </section>
+
+  <section class="cell">
+    <div class="label"><b>06</b>雾灰<code>#E3E8F0 → #F4F6FA</code></div>
+    <div class="canvas">
+      <div class="row"><span class="bubble-user">你好</span></div>
+      <div class="assistant mist"><p>你好，有什么可以帮你的？</p></div>
+      <div class="assistant mist"><p>协程执行到挂起点时保存状态。</p><pre>suspend fun load(): User {}</pre></div>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>
